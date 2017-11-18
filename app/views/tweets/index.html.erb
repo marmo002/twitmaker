@@ -3,11 +3,20 @@
     <li class="tweet">
       <p><%= tweet.message %></p>
       <time><%= tweet.created_at.strftime('%b %e, %l:%M %p') %></time>
+      <%= link_to 'DeleteMe', tweet_path(tweet), class: 'delete-btn', method: :delete, data: {confirm: "Are you sure You want to delete me :( ?"} %>
     </li>
   <% end %>
 </ul>
 
 <%= form_for @tweet do |f| %>
   <%= f.text_area :message, placeholder: "What did you learn today?" %>
-  <%= f.submit "Tweet", id: "create-tweet" %>
+  <%= f.submit "Tweet", id: "create-tweet", data: { disable_with: false } %>
 <% end %>
+
+<script id="tweet-template" type="text/x-handlebars-template">
+  <li class="tweet">
+    <p>{{ message }}</p>
+    <time>{{ created_at }}</time>
+    <a class="delete-btn" data-confirm="Are you sure You want to delete me :( ?" rel="nofollow" data-method="delete" href="/tweets/{{ id }}">DeleteMe</a>
+  </li>
+</script>
